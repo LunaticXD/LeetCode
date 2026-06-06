@@ -12,12 +12,15 @@ class Solution {
 
                 char top = stack.pop();
 
-                if((ch == ')' && top != '(' ) ||
-                    (ch == '}' && top != '{') ||
-                    (ch == ']' && top != '[')
-                 ){ 
+                if(ch == ')' && top != '(' ) {
                     return false;
-                    }
+                }
+                if (ch == '}' && top != '{'){
+                    return false;
+                }
+                if(ch == ']' && top != '['){ 
+                    return false;
+                }
             }
         }
     return stack.isEmpty();
