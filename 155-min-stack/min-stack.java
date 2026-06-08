@@ -1,28 +1,50 @@
+import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 class MinStack {
-    private List<int[]> st;
+    private ArrayDeque<Integer> stack;
+    private Stack<Integer> minStack;
 
     public MinStack() {
-        st = new ArrayList<>();
+        
+        stack = new ArrayDeque<>();
+        minStack = new Stack<>();
     }
-    
+
     public void push(int val) {
-        int[] top = st.isEmpty() ? new int[]{val, val} : st.get(st.size() - 1);
-        int min_val = top[1];
-        if (min_val > val) {
-            min_val = val;
-        }
-        st.add(new int[]{val, min_val});        
+        stack.addLast(val);
+
+        if (minStack.isEmpty() || val <= minStack.peek()) {
+            minStack.push(val);
+        } return;
     }
-    
+
     public void pop() {
-        st.remove(st.size() - 1);
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        int removed = stack.removeLast();
+
+        if (removed == minStack.peek()) {
+            minStack.pop();
+        }
     }
-    
+
     public int top() {
-        return st.isEmpty() ? -1 : st.get(st.size() - 1)[0];
+        return stack.getLast();
     }
-    
+
     public int getMin() {
-        return st.isEmpty() ? -1 : st.get(st.size() - 1)[1];
+        return minStack.peek();
     }
 }
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(value);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
