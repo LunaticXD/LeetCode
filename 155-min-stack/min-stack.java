@@ -1,21 +1,21 @@
-import java.util.Stack;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 class MinStack {
     private ArrayDeque<Integer> stack;
-    private Stack<Integer> minStack;
+    private ArrayDeque<Integer> minStack;
 
     public MinStack() {
         
         stack = new ArrayDeque<>();
-        minStack = new Stack<>();
+        minStack = new ArrayDeque<>();
     }
 
     public void push(int val) {
         stack.addLast(val);
 
-        if (minStack.isEmpty() || val <= minStack.peek()) {
-            minStack.push(val);
+        if (minStack.isEmpty() || val <= minStack.getLast()) {
+            minStack.addLast(val);
         } return;
     }
 
@@ -26,8 +26,8 @@ class MinStack {
 
         int removed = stack.removeLast();
 
-        if (removed == minStack.peek()) {
-            minStack.pop();
+        if (removed == minStack.getLast()) {
+            minStack.removeLast();
         }
     }
 
@@ -36,7 +36,7 @@ class MinStack {
     }
 
     public int getMin() {
-        return minStack.peek();
+        return minStack.getLast();
     }
 }
 
