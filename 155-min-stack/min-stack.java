@@ -1,56 +1,50 @@
-public class ListNode{
-    int value;
-    int currentmin;
-    ListNode next;
-    ListNode prev;
-    ListNode(int val,int currmin){
-        this.value = val;
-        this.currentmin = currmin;
-    }
-}
-
 class MinStack {
-
+    ListNode head;
     int min;
-    ListNode top;
-
     public MinStack() {
-        top = null;
-        min = Integer.MAX_VALUE;
+        head=null;
+        min=Integer.MAX_VALUE;
     }
     
     public void push(int val) {
-        if(top == null){
-            min = Math.min(val,min);
-            ListNode newnode = new ListNode(val,min);
-            top = newnode;
+        if(min>val){
+            min=val;
         }
-        else{
-            min = Math.min(val,min);
-            ListNode newnode = new ListNode(val,min);
-            top.next = newnode;
-            newnode.prev = top;
-            top = newnode;
-        }
+        head=new ListNode(val,min,head);
     }
     
     public void pop() {
-        top = top.prev;
-        if(top != null){
-            top.next = null;
-            min = top.currentmin;
-        }
-        else{
-            min = Integer.MAX_VALUE;
+        head=head.next;
+        if(head==null){
+            min=Integer.MAX_VALUE;
+        }else{
+            min=head.currentMin;
         }
     }
     
     public int top() {
-        return top.value;
+        return head.val;
     }
     
     public int getMin() {
-        return top.currentmin;
+        return head.currentMin;
+    }
+}
+
+class ListNode{
+    int val;
+    int currentMin;
+    ListNode next;
+    ListNode(){
+
+    }
+    ListNode(int val){
+        this.val=val;
+    }
+    ListNode(int val,int currMin,ListNode next){
+        this.val=val;
+        this.currentMin=currMin;
+        this.next=next;
     }
 }
 
