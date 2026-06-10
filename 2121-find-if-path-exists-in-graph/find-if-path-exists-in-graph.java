@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Solution {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-        // Build adjacency list
         List<List<Integer>> graph = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
@@ -15,22 +14,22 @@ public class Solution {
         }
 
         boolean[] visited = new boolean[n];
+        Queue<Integer> queue = new LinkedList<>();
 
-        return dfs(graph, source, destination, visited);
-    }
+        queue.offer(source);
+        visited[source] = true;
 
-    private boolean dfs(List<List<Integer>> graph, int current,
-                        int destination, boolean[] visited) {
-        if (current == destination) {
-            return true;
-        }
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
 
-        visited[current] = true;
+            if (node == destination) {
+                return true;
+            }
 
-        for (int neighbor : graph.get(current)) {
-            if (!visited[neighbor]) {
-                if (dfs(graph, neighbor, destination, visited)) {
-                    return true;
+            for (int neighbor : graph.get(node)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.offer(neighbor);
                 }
             }
         }
